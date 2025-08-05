@@ -21,7 +21,24 @@ const ProtectedRoute = () => {
   return user ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
-export default ProtectedRoute;
+const RedirectSignInRoute = () => {
+  const { startLoading, stopLoading } = useLoading();
+  const { user, authLoading } = useAuth();
+
+  useEffect(() => {
+    startLoading();
+    if (!authLoading) {
+      stopLoading();
+    }
+  }, [authLoading, stopLoading, startLoading]);
+
+  if (authLoading) {
+    return;
+  }
+  return user ? <Navigate to="/" replace /> : <Outlet />;
+};
+
+export { RedirectSignInRoute, ProtectedRoute };
 
 // const ProtectedRoute = ({ allowedRoles }) => {
 //   const { user } = useAuth();

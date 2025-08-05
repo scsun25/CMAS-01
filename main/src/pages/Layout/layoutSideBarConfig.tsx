@@ -21,11 +21,3 @@ export const buttonSignInList = (navigate: (path: string) => void) => [
     onClick: () => alert("haha idiot ~~ who bird you XDDDD"),
   },
 ];
-
-export const buttonLogInList = (navigate: (path: string) => void) => [
-  {
-    icon: "pi pi-sign-in",
-    label: "Login",
-    onClick: () => navigate("/login"),
-  },
-];

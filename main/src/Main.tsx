@@ -14,38 +14,38 @@ import AppRouter from "./router/AppRouter";
 const Main = () => {
   // Hook
   const { loading } = useLoading();
-  const { user } = useAuth();
-  const navigate = useNavigate();
+  const { authLoading } = useAuth();
 
-  // useEffect(() => {
-  //   if (!user) {
-  //     navigate("/login");
-  //   }
-  // }, [JSON.stringify(user)]);
+  if (authLoading || loading) {
+    return;
+    // return (
+    //   <>
+    //     {loading && (
+    //       <div
+    //         style={{
+    //           position: "fixed",
+    //           top: 0,
+    //           left: 0,
+    //           width: "100vw",
+    //           height: "100vh",
+    //           background: "rgba(255,255,255,1)",
+    //           zIndex: 99999,
+    //           display: "flex",
+    //           alignItems: "center",
+    //           justifyContent: "center",
+    //         }}
+    //       >
+    //         <ProgressSpinner
+    //           style={{ width: 80, height: 80 }}
+    //           strokeWidth="4"
+    //         />
+    //       </div>
+    //     )}
+    //   </>
+    // );
+  }
 
-  return (
-    <>
-      {loading && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100vw",
-            height: "100vh",
-            background: "rgba(255,255,255,1)",
-            zIndex: 99999,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <ProgressSpinner style={{ width: 80, height: 80 }} strokeWidth="4" />
-        </div>
-      )}
-      <AppRouter />
-    </>
-  );
+  return <AppRouter />;
 };
 
 createRoot(document.getElementById("root")!).render(

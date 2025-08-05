@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import { menuItems } from "./layoutConfig";
 import { useAuth } from "../../context/authProvider";
 import LayoutSideBar from "./LayoutSideBar";
+import React from "react";
 
 const Layout = () => {
   const { user } = useAuth();
@@ -19,4 +20,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default React.memo(Layout);

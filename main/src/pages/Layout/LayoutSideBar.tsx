@@ -2,7 +2,7 @@ import { Button } from "primereact/button";
 import { Sidebar } from "primereact/sidebar";
 import { useState } from "react";
 import { useAuth } from "../../context/authProvider";
-import { buttonLogInList, buttonSignInList } from "./layoutSideBarConfig";
+import { buttonSignInList } from "./layoutSideBarConfig";
 import { Avatar } from "primereact/avatar";
 import { useNavigate } from "react-router-dom";
 
@@ -13,10 +13,7 @@ const LayoutSideBar = () => {
 
   // State
   const [visible, setVisible] = useState(false);
-
-  let buttonList = user
-    ? buttonSignInList(navigate)
-    : buttonLogInList(navigate);
+  const buttonList = buttonSignInList(navigate);
 
   return user ? (
     <>

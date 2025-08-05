@@ -2,7 +2,8 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "../pages/Layout/Layout";
 import LoginPage from "../pages/Login/LoginPage";
 import PatientPage from "../pages/Patient/PatientPage";
-import ProtectedRoute from "./ProtectedRoute";
+import { ProtectedRoute, RedirectSignInRoute } from "./ProtectedRoute";
+import AppointmentPage from "../pages/Appointment/AppointmentPage";
 
 const AppRouter: React.FC = () => (
   <>
@@ -11,9 +12,12 @@ const AppRouter: React.FC = () => (
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<div>Hello</div>} />
           <Route path="/patient" element={<PatientPage />} />
+          <Route path="/appointment" element={<AppointmentPage />} />
         </Route>
 
-        <Route path="/login" element={<LoginPage />} />
+        <Route element={<RedirectSignInRoute />}>
+          <Route path="/login" element={<LoginPage />} />
+        </Route>
       </Route>
     </Routes>
   </>
