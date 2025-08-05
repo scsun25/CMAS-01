@@ -1,0 +1,41 @@
+@import 'primereact/resources/themes/lara-light-pink/theme.css';
+
+@layer tailwind-base, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+body {
+  margin: 0 !important;
+}
+
+.std-layout > *:not(.pure) {
+  display: block !important;
+  margin-top: 1rem;
+}
+
+.std-layout > div.txt {
+  display: flex !important;
+  font-size: 0.5rem !important; /* text-sm */
+  margin-top: 0.25rem !important; /* mb-2 */
+}
+
+.std-layout > button.button {
+  display: flex !important;
+  align-self: center;
+  font-size: 0.875rem; /* text-sm */
+  margin-top: 0.25rem; /* mb-2 */
+  background-color: transparent; /* bg-transparent */
+  border: none; /* border-none */
+  cursor: pointer; /* cursor-pointer */
+}
+.std-layout > button.button:hover {
+  color: #2563eb; /* text-blue-600 */
+  text-decoration: underline; /* hover:underline */
+}
