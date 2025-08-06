@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "@fullcalendar/daygrid": "^6.1.18",
+    "@fullcalendar/interaction": "^6.1.18",
     "@fullcalendar/react": "^6.1.18",
+    "@fullcalendar/timegrid": "^6.1.18",
     "@supabase/supabase-js": "^2.53.0",
+    "date-fns": "^4.1.0",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",
     "primereact": "^10.9.6",

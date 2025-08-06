@@ -1,0 +1,7 @@
+.hoverable-row {
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.hoverable-row:hover {
+  background: #f1f5f9 !important;
+}

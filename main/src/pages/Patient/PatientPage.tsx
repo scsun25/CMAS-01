@@ -1,24 +1,16 @@
 import { Button } from "primereact/button";
-import { Card } from "primereact/card";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
+import { Paginator } from "primereact/paginator";
 import { Dialog } from "primereact/dialog";
-import { Dropdown } from "primereact/dropdown";
-import { InputText } from "primereact/inputtext";
-import { Sidebar } from "primereact/sidebar";
+
 import { useEffect, useState } from "react";
 import { supabase } from "../../auth/superbaseClient";
 import type { Patient } from "../../types/Patient";
 import PatientCreateForm from "./PatientCreateForm";
 import { useForm } from "react-hook-form";
-
-interface PatientRecord {
-  id: string;
-  name: string;
-  age: number;
-  gender: string;
-  createdAt?: any;
-}
+import PatientCaseTabe from "./PatientCaseTab";
+import "./PatientPage.css";
 
 const PatientPage: React.FC = () => {
   //Hook
@@ -29,6 +21,8 @@ const PatientPage: React.FC = () => {
 
   const [loading, setLoading] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(7);
   // State and setter for form error
   const [formError, setFormError] = useState<string>("");
   const [showModal, setShowModal] = useState(false);
@@ -58,51 +52,76 @@ const PatientPage: React.FC = () => {
 
   return (
     <>
-      <div className="p-2 flex ">
-        <DataTable
-          value={patientList}
-          loading={loading}
-          paginator
-          rows={10}
-          className="w-full"
-        >
-          <Column field="name" header="Name" />
-          <Column field="birth" header="Birthday" />
-          <Column field="gender" header="Gender" />
-          <Column field="main_contact" header="Contact" />
-        </DataTable>
-        <Card
-          className="ml-4 w-1/2"
+      <div className="p-2 flex flex-col" style={{ height: "80vh" }}>
+        <div
           style={{
-            display: visible ? "" : "none",
-            background: "yellow",
-            // width: "50%",
-          }} // Hide this button
+            flex: 1,
+            minHeight: 0,
+            display: "flex",
+            flexDirection: "column",
+          }}
         >
-          <div className="w-1/2">kjhkljhlkjh</div>
-        </Card>
-      </div>
-      <div className="my-2 flex flex-row-reverse ...">
-        <Button
-          className="my-2 ml-4"
-          label="Add Patient Record"
-          icon="pi pi-plus"
-          onClick={() => setShowModal(true)} // Call the function with an empty object
+          <div className="mt-3 mb-4 flex flex-row">
+            <Button
+              className="my-2 ml-4"
+              label="Patient"
+              icon="pi pi-plus"
+              onClick={() => setShowModal(true)}
+            />
+          </div>
+          <div
+            style={{
+              flex: 1,
+              minHeight: 0,
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <DataTable
+              value={patientList.slice(first, first + rows)}
+              loading={loading}
+              className="w-full h-full"
+              scrollable
+              scrollHeight="100%"
+              onRowClick={(e) => {
+                let rowPatientData = e.data as Patient;
+                setPatient(rowPatientData);
+                setVisible(true);
+              }}
+              rowClassName={() => "hoverable-row"}
+            >
+              <Column field="name" header="Name" />
+              <Column field="main_contact" header="Contact" />
+              <Column field="birth" header="Birthday" />
+              <Column field="gender" header="Gender" />
+            </DataTable>
+          </div>
+          <Paginator
+            first={first}
+            rows={rows}
+            totalRecords={patientList.length}
+            rowsPerPageOptions={[7, 10, 20, 50]}
+            onPageChange={(e) => {
+              setFirst(e.first);
+              setRows(e.rows);
+            }}
+            className="mt-2"
+          />
+        </div>
+        <PatientCaseTabe
+          visible={visible}
+          patient={patient}
+          setVisible={setVisible}
         />
-        <Button
-          className="my-2 ml-4"
-          label="Show Sidebar"
-          icon="pi pi-plus"
-          onClick={() => setVisible(!visible)}
-        />
       </div>
+
+      {/* Modal for adding new patient */}
       <Dialog
         header="New Patient"
         visible={showModal}
         style={{ width: "60%" }}
         onHide={() => {
           setShowModal(false);
-          setFormError("");
           patientAddForm.reset();
         }}
         modal
