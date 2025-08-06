@@ -1,0 +1,42 @@
+CREATE TABLE "PATIENTS" (
+  patient_id TEXT PRIMARY KEY,
+  name VARCHAR NOT NULL,
+  gender VARCHAR,
+  birth TEXT,
+  main_contact VARCHAR,
+  contact1 VARCHAR,
+  contact2 VARCHAR,
+  contact3 VARCHAR,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  access_uid TEXT DEFAULT auth.uid(),
+  last_visit TIME
+);
+
+-- 2. 病患個案表
+CREATE TABLE "PATIENT_CASES" (
+  patient_id TEXT NOT NULL,
+  case_id TEXT NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  urgency VARCHAR,
+  remark VARCHAR,
+  access_uid TEXT DEFAULT auth.uid(),
+  -- 外鍵：指向 PATIENTS
+  CONSTRAINT fk_patient
+    FOREIGN KEY(patient_id) REFERENCES "PATIENTS"(patient_id) ON DELETE CASCADE,
+  -- 複合主鍵
+  PRIMARY KEY (patient_id, case_id)
+);
+
+-- 3. 個案細節表（複合主鍵）
+CREATE TABLE "PATIENT_CASE_DETAILS" (
+  patient_id TEXT NOT NULL,
+  case_id TEXT NOT NULL,
+  tag VARCHAR NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT now(),
+  access_uid TEXT DEFAULT auth.uid(),
+  -- 複合主鍵
+  PRIMARY KEY (patient_id, case_id, tag),
+  -- 外鍵：指向 PATIENT_CASES
+CONSTRAINT fk_case
+    FOREIGN KEY(patient_id, case_id) REFERENCES "PATIENT_CASES"(patient_id, case_id) ON DELETE CASCADE
+);

@@ -14,6 +14,8 @@ const Layout = () => {
         start={user ? <></> : <p>Welcome to CMAS</p>}
         model={user ? menuItems : []}
         end={<LayoutSideBar />}
+        // className="bg-primary/70"
+        // style={{ background: "var(--primary-color)" }}
       />
       <Outlet />
     </>

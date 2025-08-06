@@ -11,10 +11,19 @@
   @tailwind utilities;
 }
 
+/* Global styles */
 body {
   margin: 0 !important;
 }
 
+.p-menubar {
+  border-radius: 0 !important;
+}
+
+
+
+
+/* Specific Tag Style */
 .std-layout > *:not(.pure) {
   display: block !important;
   margin-top: 1rem;

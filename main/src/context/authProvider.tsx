@@ -39,6 +39,7 @@ export const AuthgProvider = ({ children }: { children: any }) => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
+        // console.log(session.user);
         setUser(session.user as User);
       } else {
         setUser(undefined);
@@ -53,6 +54,7 @@ export const AuthgProvider = ({ children }: { children: any }) => {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
+        scopes: "https://www.googleapis.com/auth/calendar.readonly",
         redirectTo: `${window.location.origin}/`,
       },
     });

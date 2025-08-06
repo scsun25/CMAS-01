@@ -20,6 +20,7 @@
 2. npm install -D tailwindcss postcss autoprefixer
 3. npm install -D @tailwindcss/cli
 4. npx tailwindcss init -p
+5. npm install @fullcalendar/react @fullcalendar/daygrid @fullcalendar/google-calendar
 
 ## Setting.json
 
